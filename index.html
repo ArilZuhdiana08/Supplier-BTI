@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>SUPPLIER CONTROL - PT. BONECOM TRICOM</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="header">
+    <img src="assets/gedung.jpg" alt="Gedung" class="header-img">
+    <div class="overlay">
+      <div class="logo-box left-logo">
+        <img src="assets/bti.png" alt="Logo BTI">
+      </div>
+      <div class="logo-box right-logo">
+        <img src="assets/k3.jpg" alt="Logo K3">
+      </div>
+      <h1 class="title">SUPPLIER CONTROL<br><span>PT. BONECOM TRICOM</span></h1>
+    </div>
+  </header>
+
+  <main class="form-section">
+    <form id="supplier-form" class="form-card">
+      <h2>Form Kunjungan Supplier</h2>
+
+      <label>Nama Supplier</label>
+      <select name="SUPPLIER" required>
+        <option value="" disabled selected>-- Pilih Supplier --</option>
+        <option>PT. TENMA INDONESIA (RIT 1)</option>
+            <option>PT. INDAH VARIA EKA SELARAS</option>
+            <option>PT. SIGMA INTI PRESISI</option>
+            <option>PT. SINAR SUMINOE (RIT 1)</option>
+            <option>PT. BTI PLANT 5</option>
+            <option>PT. ATHEJA KAWASIMA</option>
+            <option>PT. PRIMARAYA GRAHA</option>
+            <option>PT. RAJAWALI MITRA PRATAMA</option>
+            <option>PT. ENDOTA SINAR INDONESIA</option>
+            <option>PT. TOYO QUALITY ONE INDONESIA</option>
+            <option>PT. RAVALIA INTI MANDIRI</option>
+            <option>PT. SEIREN INDONESIA</option>
+            <option>PT. ARMSTRONG INDONESIA</option>
+            <option>PT. NISSHO INDUSTRI INDONESIA</option>
+            <option>PT. FUJISEAT INDONESIA</option>
+            <option>PT. YKK ZIPPER INDONESIA</option>
+            <option>PT. MEIWA INDONESIA</option>
+            <option>PT. SERVO FIRE INDONESIA</option>
+            <option>PT. INOAC POLYTECHNO (RIT 1)</option>
+            <option>PT. INOAC POLYTECHNO (RIT 2)</option>
+            <option>PT. BONECOM TRICOM (TEGAL)</option>
+            <option>PT. TENMA INDONESIA (RIT 2)</option>
+            <option>PT. SINAR SUMINOE (RIT 2)</option>
+      </select>
+
+      <label>Tanggal</label>
+      <input type="date" name="TANGGAL" required>
+
+      <label>Waktu IN</label>
+      <input type="time" name="WAKTU_IN" required>
+
+      <label>Waktu OUT</label>
+      <input type="time" name="WAKTU_OUT" required>
+
+      <label>Remark</label>
+      <input type="text" name="REMARK" placeholder="Keterangan jika ada">
+
+      <button type="submit">Kirim Data</button>
+    </form>
+  </main>
+
+  <script>
+    const form = document.getElementById('supplier-form');
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+
+      const data = new FormData(form);
+      const formData = new URLSearchParams();
+
+      for (const pair of data.entries()) {
+        formData.append(pair[0], pair[1]);
+      }
+
+      fetch('https://script.google.com/macros/s/AKfycbxX3w1URsNt2SLGsvIOl5a_FMEzM9OpXfxkjJljCnxtjN-pS5r_IjNKjBw8Rbv0TnkR3Q/exec', {
+        method: 'POST',
+        body: formData
+      })
+      .then(res => res.text())
+      .then(response => {
+        alert("✅ Data berhasil dikirim!");
+        form.reset();
+      })
+      .catch(err => {
+        alert("❌ Gagal mengirim data.");
+        console.error(err);
+      });
+    });
+  </script>
+</body>
+</html>
