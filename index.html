@@ -8,10 +8,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <header class="header">
-    <img src="assets/header.png" alt="Header" class="header-img">
-    <div class="overlay"></div>
-  </header>
+  <div class="header">
+    <img src="assets/header.png" alt="Header PT Bonecom" class="header-img" />
+  </div>
 
   <main class="form-section">
     <form id="supplier-form" class="form-card">
@@ -24,7 +23,6 @@
         <option>PT. INDAH VARIA EKA SELARAS</option>
         <option>PT. SIGMA INTI PRESISI</option>
         <option>PT. SINAR SUMINOE (RIT 1)</option>
-        <option>PT. HERCULON</option>
         <option>PT. BTI PLANT 5</option>
         <option>PT. ATHEJA KAWASIMA</option>
         <option>PT. PRIMARAYA GRAHA</option>
@@ -68,7 +66,6 @@
       "PT. INDAH VARIA EKA SELARAS": "08:00",
       "PT. SIGMA INTI PRESISI": "08:30",
       "PT. SINAR SUMINOE (RIT 1)": "09:40",
-      "PT. HERCULON": "09:05",
       "PT. BTI PLANT 5": "10:00",
       "PT. ATHEJA KAWASIMA": "08:00",
       "PT. PRIMARAYA GRAHA": "10:10",
@@ -121,7 +118,7 @@
 
       data.append('STATUS', status);
 
-      fetch('https://script.google.com/macros/s/AKfycbyuMHKdbOpt6GV2vaCCwTVkx_b5seSLqJxPHOOm5RV9Z3gJu1BMlYTjfybW9IdvFYMjgQ/exec', {
+      fetch('https://script.google.com/macros/s/AKfycbxuB2fIZV0S0Mp33LAog2mxUDIksnYkqFbJsPE_VIOLUpR3f5-QSm0vp3cv5LXGpWZSNg/exec', {
         method: 'POST',
         body: data
       })
