@@ -9,16 +9,8 @@
 </head>
 <body>
   <header class="header">
-    <img src="assets/gedung.jpg" alt="Gedung" class="header-img">
-    <div class="overlay">
-      <div class="logo-box left-logo">
-        <img src="assets/bti.png" alt="Logo BTI">
-      </div>
-      <div class="logo-box right-logo">
-        <img src="assets/k3.jpg" alt="Logo K3">
-      </div>
-      <h1 class="title">SUPPLIER CONTROL<br><span>PT. BONECOM TRICOM</span></h1>
-    </div>
+    <img src="assets/header.png" alt="Header" class="header-img">
+    <div class="overlay"></div>
   </header>
 
   <main class="form-section">
@@ -26,31 +18,32 @@
       <h2>Form Kunjungan Supplier</h2>
 
       <label>Nama Supplier</label>
-      <select name="SUPPLIER" required>
+      <select name="SUPPLIER" required id="supplier-select">
         <option value="" disabled selected>-- Pilih Supplier --</option>
         <option>PT. TENMA INDONESIA (RIT 1)</option>
-            <option>PT. INDAH VARIA EKA SELARAS</option>
-            <option>PT. SIGMA INTI PRESISI</option>
-            <option>PT. SINAR SUMINOE (RIT 1)</option>
-            <option>PT. BTI PLANT 5</option>
-            <option>PT. ATHEJA KAWASIMA</option>
-            <option>PT. PRIMARAYA GRAHA</option>
-            <option>PT. RAJAWALI MITRA PRATAMA</option>
-            <option>PT. ENDOTA SINAR INDONESIA</option>
-            <option>PT. TOYO QUALITY ONE INDONESIA</option>
-            <option>PT. RAVALIA INTI MANDIRI</option>
-            <option>PT. SEIREN INDONESIA</option>
-            <option>PT. ARMSTRONG INDONESIA</option>
-            <option>PT. NISSHO INDUSTRI INDONESIA</option>
-            <option>PT. FUJISEAT INDONESIA</option>
-            <option>PT. YKK ZIPPER INDONESIA</option>
-            <option>PT. MEIWA INDONESIA</option>
-            <option>PT. SERVO FIRE INDONESIA</option>
-            <option>PT. INOAC POLYTECHNO (RIT 1)</option>
-            <option>PT. INOAC POLYTECHNO (RIT 2)</option>
-            <option>PT. BONECOM TRICOM (TEGAL)</option>
-            <option>PT. TENMA INDONESIA (RIT 2)</option>
-            <option>PT. SINAR SUMINOE (RIT 2)</option>
+        <option>PT. INDAH VARIA EKA SELARAS</option>
+        <option>PT. SIGMA INTI PRESISI</option>
+        <option>PT. SINAR SUMINOE (RIT 1)</option>
+        <option>PT. HERCULON</option>
+        <option>PT. BTI PLANT 5</option>
+        <option>PT. ATHEJA KAWASIMA</option>
+        <option>PT. PRIMARAYA GRAHA</option>
+        <option>PT. RAJAWALI MITRA PRATAMA</option>
+        <option>PT. ENDOTA SINAR INDONESIA</option>
+        <option>PT. TOYO QUALITY ONE INDONESIA</option>
+        <option>PT. RAVALIA INTI MANDIRI</option>
+        <option>PT. SEIREN INDONESIA</option>
+        <option>PT. ARMSTRONG INDONESIA</option>
+        <option>PT. NISSHO INDUSTRI INDONESIA</option>
+        <option>PT. FUJISEAT INDONESIA</option>
+        <option>PT. YKK ZIPPER INDONESIA</option>
+        <option>PT. MEIWA INDONESIA</option>
+        <option>PT. SERVO FIRE INDONESIA</option>
+        <option>PT. INOAC POLYTECHNO (RIT 1)</option>
+        <option>PT. INOAC POLYTECHNO (RIT 2)</option>
+        <option>PT. BONECOM TRICOM (TEGAL)</option>
+        <option>PT. TENMA INDONESIA (RIT 2)</option>
+        <option>PT. SINAR SUMINOE (RIT 2)</option>
       </select>
 
       <label>Tanggal</label>
@@ -70,20 +63,67 @@
   </main>
 
   <script>
+    const waktuReferensi = {
+      "PT. TENMA INDONESIA (RIT 1)": "08:00",
+      "PT. INDAH VARIA EKA SELARAS": "08:00",
+      "PT. SIGMA INTI PRESISI": "08:30",
+      "PT. SINAR SUMINOE (RIT 1)": "09:40",
+      "PT. HERCULON": "09:05",
+      "PT. BTI PLANT 5": "10:00",
+      "PT. ATHEJA KAWASIMA": "08:00",
+      "PT. PRIMARAYA GRAHA": "10:10",
+      "PT. RAJAWALI MITRA PRATAMA": "11:10",
+      "PT. ENDOTA SINAR INDONESIA": "11:00",
+      "PT. TOYO QUALITY ONE INDONESIA": "10:40",
+      "PT. RAVALIA INTI MANDIRI": "13:00",
+      "PT. SEIREN INDONESIA": "13:40",
+      "PT. ARMSTRONG INDONESIA": "13:00",
+      "PT. NISSHO INDUSTRI INDONESIA": "13:55",
+      "PT. FUJISEAT INDONESIA": "16:00",
+      "PT. YKK ZIPPER INDONESIA": "15:30",
+      "PT. MEIWA INDONESIA": "13:15",
+      "PT. SERVO FIRE INDONESIA": "09:55",
+      "PT. INOAC POLYTECHNO (RIT 1)": "07:30",
+      "PT. INOAC POLYTECHNO (RIT 2)": "15:00",
+      "PT. BONECOM TRICOM (TEGAL)": "10:40",
+      "PT. TENMA INDONESIA (RIT 2)": "21:10",
+      "PT. SINAR SUMINOE (RIT 2)": "22:00"
+    };
+
     const form = document.getElementById('supplier-form');
     form.addEventListener('submit', e => {
       e.preventDefault();
 
       const data = new FormData(form);
-      const formData = new URLSearchParams();
+      const supplier = data.get('SUPPLIER');
+      const waktuInStr = data.get('WAKTU_IN');
+      const waktuOutStr = data.get('WAKTU_OUT');
+      const referensiStr = waktuReferensi[supplier];
 
-      for (const pair of data.entries()) {
-        formData.append(pair[0], pair[1]);
+      let status = "Tepat Waktu";
+      if (referensiStr && waktuInStr) {
+        const [jamIn, menitIn] = waktuInStr.split(":").map(Number);
+        const [jamRef, menitRef] = referensiStr.split(":").map(Number);
+
+        const waktuInDate = new Date(0, 0, 0, jamIn, menitIn);
+        const referensiDate = new Date(0, 0, 0, jamRef, menitRef);
+
+        const selisihMenit = (waktuInDate - referensiDate) / 60000;
+
+        if (selisihMenit > 15) {
+          status = "Delay";
+        } else if (selisihMenit < -1) {
+          status = "Advance";
+        } else {
+          status = "Tepat Waktu";
+        }
       }
 
-      fetch('https://script.google.com/macros/s/AKfycbxX3w1URsNt2SLGsvIOl5a_FMEzM9OpXfxkjJljCnxtjN-pS5r_IjNKjBw8Rbv0TnkR3Q/exec', {
+      data.append('STATUS', status);
+
+      fetch('https://script.google.com/macros/s/AKfycbyuMHKdbOpt6GV2vaCCwTVkx_b5seSLqJxPHOOm5RV9Z3gJu1BMlYTjfybW9IdvFYMjgQ/exec', {
         method: 'POST',
-        body: formData
+        body: data
       })
       .then(res => res.text())
       .then(response => {
